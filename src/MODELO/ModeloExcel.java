@@ -23,7 +23,7 @@ public class ModeloExcel {
 
         try {
             //crea el fichero
-            book = WorkbookFactory.create(fichero);
+            book = WorkbookFactory.create(new FileInputStream(fichero));
             //crea la hoja de excel
             Sheet hoja = book.getSheetAt(0);
             //crea iterator
@@ -45,31 +45,33 @@ public class ModeloExcel {
                     if (indiceFila == 0) {
 
                         model.addColumn(celda.getStringCellValue());
-                    } else{
-                        if(celda != null) {
-                        switch (celda.getCellType()) {
-                            case NUMERIC :
-                                listaColumna[indiceCol]=(int)Math.round(celda.getNumericCellValue());
-                                break;
-                                case STRING :
-                                    listaColumna[indiceCol]=celda.getStringCellValue();
+                    } else {
+                        if (celda != null) {
+                            switch (celda.getCellType()) {
+                                case Cell.CELL_TYPE_NUMERIC:
+                                    listaColumna[indiceCol] = (int) Math.round(celda.getNumericCellValue());
                                     break;
-                                case BOOLEAN :
-                                    listaColumna[indiceCol]= celda.getBooleanCellValue();
+                                case Cell.CELL_TYPE_STRING:
+                                    listaColumna[indiceCol] = celda.getStringCellValue();
                                     break;
-                                default :
-                                    listaColumna[indiceCol]=celda.getDateCellValue();
-                                
-                                
+                                case Cell.CELL_TYPE_BOOLEAN:
+                                    listaColumna[indiceCol] = celda.getBooleanCellValue();
+                                    break;
+                                default:
+                                    listaColumna[indiceCol] = celda.getDateCellValue();
+                                    break;
+
+                            }
                         }
-                    } 
-                    
+
                     }
                 }
+                if (indiceFila!=0)model.addRow(listaColumna);
             }
+            msj = "Importación exitosa";
         } catch (Exception e) {
         }
-        return null;
+        return msj;
 
     }
 

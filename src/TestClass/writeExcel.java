@@ -42,7 +42,7 @@ public class writeExcel {
 		//poner negrita a la cabecera
 		CellStyle style = libro.createCellStyle();
         Font font = libro.createFont();
-        font.setBold(true);
+        font.setItalic(true);
         style.setFont(font);
         
         
