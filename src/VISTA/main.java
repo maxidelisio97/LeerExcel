@@ -20,7 +20,7 @@ public class main {
         vista.setVisible(true);
         ControladorExcel controlador = new ControladorExcel(vista,modelo);
         
-        /*HASDLKHFBSDHKFFLDHFSHLFDSHFISDFISDF*/
+       
     }
     
 }
