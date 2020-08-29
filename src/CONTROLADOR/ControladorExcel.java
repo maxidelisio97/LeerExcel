@@ -87,19 +87,32 @@ public class ControladorExcel {
             
             Connection conexion = conn.getConexion();     
             
-            PreparedStatement ps = conexion.prepareStatement("UPDATE productos SET PRECIO=? WHERE CODIGO_ARTICULO=?");
-            
+           // PreparedStatement ps = conexion.prepareStatement("UPDATE productos SET PRECIO=? WHERE CODIGO_ARTICULO=?");
+            PreparedStatement ps = conexion.prepareStatement("INSERT INTO productos (CODIGO_ARTICULO,PRECIO,CLASE,SECTOR,MARCA,DESCRIPCION,UNIDAD) VALUES (?,?,?,?,?,?,?)");
             TableModel modeloTabla = this.vistaE.tabla.getModel();
             for (int i = 0; i < numFila; i++) {
                
-                 
-                ps.setObject(2,  modeloTabla.getValueAt(i, 1));
                 ps.setString(1, (String) modeloTabla.getValueAt(i, 0));
+                ps.setObject(2,  modeloTabla.getValueAt(i, 1));
+                 ps.setString(3, (String) modeloTabla.getValueAt(i, 2));
+                ps.setString(4, (String) modeloTabla.getValueAt(i, 3));
+                 ps.setString(5, (String) modeloTabla.getValueAt(i, 4));
+                ps.setString(6,(String)  modeloTabla.getValueAt(i, 5));
+                 ps.setString(7, (String) modeloTabla.getValueAt(i, 6));
                
-                 
+                
+                // ps.setObject(1,  modeloTabla.getValueAt(i, 1));
+                //ps.setString(2, (String) modeloTabla.getValueAt(i, 0));               
+               
+                
+                
                  ps.execute();
+                 
+                 System.out.println("bucle" + i);
               
             }
+            JOptionPane.showMessageDialog(null,"FINISH HIM");
+            
   
         } catch (SQLException ex) {
               ex.printStackTrace();

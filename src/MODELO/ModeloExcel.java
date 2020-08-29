@@ -36,7 +36,7 @@ public class ModeloExcel {
                 Row fila = (Row) filaIterator.next();
                 Iterator columnIterator = fila.cellIterator();
 
-                Object[] listaColumna = new Object[4];
+                Object[] listaColumna = new Object[10];
                 int indiceColumna = -1;
 
                 while (columnIterator.hasNext()) {

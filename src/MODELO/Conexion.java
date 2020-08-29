@@ -23,9 +23,9 @@ public class Conexion {
       public Connection getConexion() {
 
         Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/productos?serverTimezone=UTC";
+        String url = "jdbc:mariadb://localhost:3306/PRODUCTOS";
         String user = "root";
-        String password = "";
+        String password = "4435";
 
         try {
 
