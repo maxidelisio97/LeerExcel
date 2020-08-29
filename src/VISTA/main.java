@@ -15,10 +15,10 @@ import MODELO.ModeloExcel;
 public class main {
     public static void main(String[] args) {
         
-        VistaExcel vista = new VistaExcel();
+        vistaPrincipal vista = new vistaPrincipal();
         ModeloExcel modelo = new ModeloExcel();
         vista.setVisible(true);
-        ControladorExcel controlador = new ControladorExcel(vista,modelo);
+        
         
         /*HASDLKHFBSDHKFFLDHFSHLFDSHFISDFISDF*/
     }
