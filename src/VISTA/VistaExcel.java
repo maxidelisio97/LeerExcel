@@ -22,17 +22,16 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class Principal extends javax.swing.JFrame {
+public class VistaExcel extends javax.swing.JFrame {
 
     File fichero = null;
     Conexion conn;
 
-    public Principal() {
+    public VistaExcel() {
         initComponents();
         // cargarModeloTabla();
         conn = new Conexion();
-        modeloTabla.addColumn("Codigo");
-        modeloTabla.addColumn("Precio");
+        
        
     }
 
@@ -50,11 +49,6 @@ public class Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnImportar.setText("Importar");
-        btnImportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportarActionPerformed(evt);
-            }
-        });
 
         btnExportar.setText("Exportar");
 
@@ -116,14 +110,6 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarActionPerformed
-        File archivo = getFile();
-
-        leeExcel(archivo, tabla);
-
-        tabla.setModel(modeloTabla);
-    }//GEN-LAST:event_btnImportarActionPerformed
-
     private void btnActualizarPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPrecioActionPerformed
 
         try {
@@ -146,31 +132,12 @@ public class Principal extends javax.swing.JFrame {
             }
   
         } catch (SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VistaExcel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnActualizarPrecioActionPerformed
 
  
-    
-    public File getFile() {
-
-        JFileChooser fc = new JFileChooser();
-
-        int seleccion = fc.showOpenDialog(this);
-
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-
-            fichero = fc.getSelectedFile();
-
-        } else {
-            System.out.println("NO A ELEGIDO NADA");
-        }
-        return fichero;
-
-    }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnActualizarPrecio;
     public javax.swing.JButton btnExportar;
@@ -181,64 +148,6 @@ public class Principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 private DefaultTableModel modeloTabla = new DefaultTableModel();
 
-    public void leeExcel(File archivo, JTable tabla) {
-
-        Workbook wb;
-
-        try {
-
-            wb = WorkbookFactory.create(new FileInputStream(archivo));
-            Sheet hoja = wb.getSheetAt(0);
-            Iterator filaIterator = hoja.rowIterator();
-            int indiceFila = -1;
-
-            while (filaIterator.hasNext()) {
-                indiceFila++;
-                Row fila = (Row) filaIterator.next();
-                Iterator columnIterator = fila.cellIterator();
-
-                Object[] listaColumna = new Object[4];
-                int indiceColumna = -1;
-
-                while (columnIterator.hasNext()) {
-                    indiceColumna++;
-
-                    Cell cell = (Cell) columnIterator.next();
-                    if (indiceFila == 0) {
-
-                        modeloTabla.addColumn(cell.getStringCellValue());
-                    } else {
-
-                        if (cell != null) {
-
-                            switch (cell.getCellType()) {
-
-                                case Cell.CELL_TYPE_NUMERIC:
-                                    listaColumna[indiceColumna] = (double) cell.getNumericCellValue();
-
-                                    break;
-
-                                case Cell.CELL_TYPE_STRING:
-
-                                    listaColumna[indiceColumna] = cell.getStringCellValue();
-                                    break;
-
-                            }
-                        }
-
-                    }
-
-                }
-                if (indiceFila != 0) {
-                    modeloTabla.addRow(listaColumna);
-                }
-            }
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-    }
+   
 
 }

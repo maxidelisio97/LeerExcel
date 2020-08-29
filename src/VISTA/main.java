@@ -5,7 +5,8 @@
  */
 package VISTA;
 
-import CONTROLADOR.ControladorEvento;
+import CONTROLADOR.ControladorExcel;
+import MODELO.ModeloExcel;
 
 /**
  *
@@ -14,9 +15,10 @@ import CONTROLADOR.ControladorEvento;
 public class main {
     public static void main(String[] args) {
         
-        Principal vista = new Principal();
+        VistaExcel vista = new VistaExcel();
+        ModeloExcel modelo = new ModeloExcel();
         vista.setVisible(true);
-        ControladorEvento controlador = new ControladorEvento(vista);
+        ControladorExcel controlador = new ControladorExcel(vista,modelo);
     }
     
 }

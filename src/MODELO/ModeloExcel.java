@@ -14,65 +14,82 @@ import org.apache.poi.ss.usermodel.Sheet;
 public class ModeloExcel {
 
     Workbook book;
+    DefaultTableModel modeloTabla = new DefaultTableModel();
 
-    public String importar(File fichero, JTable tabla) {
+    public String importar(File archivo, JTable tabla) {
 
-        String msj = "Error en la importacion";
-        DefaultTableModel model = new DefaultTableModel();
-        tabla.setModel(model);
+        String respuesta = "Error en la importacion";
+
+        tabla.setModel(modeloTabla);
+
+        Workbook wb;
 
         try {
-            //crea el fichero
-            book = WorkbookFactory.create(new FileInputStream(fichero));
-            //crea la hoja de excel
-            Sheet hoja = book.getSheetAt(0);
-            //crea iterator
+
+            wb = WorkbookFactory.create(new FileInputStream(archivo));
+            Sheet hoja = wb.getSheetAt(0);
             Iterator filaIterator = hoja.rowIterator();
-            //Indice de fila
             int indiceFila = -1;
+
             while (filaIterator.hasNext()) {
                 indiceFila++;
                 Row fila = (Row) filaIterator.next();
-                //recorre las filas o columnas de una fila ya creada
-                Iterator Columna = fila.cellIterator();
-                Object[] listaColumna = new Object[9999];
-                int indiceCol = -1;
-                //Va a ser true si encuentra columnas por recorrer
-                while (Columna.hasNext()) {
-                    indiceCol++;
-                    Cell celda = (Cell) Columna.next();
-                    //si indice fila es igual a 0 entronce agrega un columna
+                Iterator columnIterator = fila.cellIterator();
+
+                Object[] listaColumna = new Object[4];
+                int indiceColumna = -1;
+
+                while (columnIterator.hasNext()) {
+                    indiceColumna++;
+
+                    Cell cell = (Cell) columnIterator.next();
                     if (indiceFila == 0) {
 
-                        model.addColumn(celda.getStringCellValue());
+                        modeloTabla.addColumn(cell.getStringCellValue());
                     } else {
-                        if (celda != null) {
-                            switch (celda.getCellType()) {
+
+                        if (cell != null) {
+
+                            switch (cell.getCellType()) {
+
                                 case Cell.CELL_TYPE_NUMERIC:
-                                    listaColumna[indiceCol] = (int) Math.round(celda.getNumericCellValue());
+                                    listaColumna[indiceColumna] = (double) cell.getNumericCellValue();
+
                                     break;
+
                                 case Cell.CELL_TYPE_STRING:
-                                    listaColumna[indiceCol] = celda.getStringCellValue();
+
+                                    listaColumna[indiceColumna] = cell.getStringCellValue();
                                     break;
+
                                 case Cell.CELL_TYPE_BOOLEAN:
-                                    listaColumna[indiceCol] = celda.getBooleanCellValue();
+
+                                    listaColumna[indiceColumna] = cell.getBooleanCellValue();
                                     break;
+
                                 default:
-                                    listaColumna[indiceCol] = celda.getDateCellValue();
+
+                                    listaColumna[indiceColumna] = cell.getDateCellValue();
                                     break;
 
                             }
                         }
 
                     }
-                }
-                if (indiceFila!=0)model.addRow(listaColumna);
-            }
-            msj = "Importación exitosa";
-        } catch (Exception e) {
-        }
-        return msj;
 
+                }
+                if (indiceFila != 0) modeloTabla.addRow(listaColumna);
+                    
+                
+            }
+            respuesta = "Importación exitosa";
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return respuesta;
     }
 
 }
