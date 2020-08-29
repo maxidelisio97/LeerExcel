@@ -5,6 +5,7 @@
  */
 package VISTA;
 
+import MODELO.Conexion;
 import java.io.File;
 import java.sql.*;
 import java.io.FileInputStream;
@@ -56,11 +57,6 @@ public class VistaExcel extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tabla);
 
         btnActualizarPrecio.setText("Actualizar precio");
-        btnActualizarPrecio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarPrecioActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -109,33 +105,6 @@ public class VistaExcel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnActualizarPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPrecioActionPerformed
-
-        try {
-            int numFila = tabla.getRowCount();
-            int numColumna = tabla.getColumnCount(); 
-           
-            
-            Connection conexion = conn.getConexion();     
-            
-            PreparedStatement ps = conexion.prepareStatement("UPDATE productos SET PRECIO=? WHERE CODIGO_ARTICULO=?");
-            
-            
-            for (int i = 0; i < numFila; i++) {
-               
-                ps.setObject(1,  modeloTabla.getValueAt(i, 1));
-                ps.setString(2, (String) modeloTabla.getValueAt(i, 0));
-                 
-                 ps.execute();
-              
-            }
-  
-        } catch (SQLException ex) {
-            Logger.getLogger(VistaExcel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_btnActualizarPrecioActionPerformed
 
  
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA;
+package MODELO;
 
 /**
  *
  * @author maxid
  */
-public class Actualizar {
+public class Productos {
     
     public String  codigo;
 
-    public Actualizar(String codigo, String precio) {
+    public Productos(String codigo, String precio) {
         this.codigo = codigo;
         this.precio = precio;
     }
