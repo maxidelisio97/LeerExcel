@@ -41,17 +41,35 @@ public class ControladorVistaPrincipal {
                
             }
         });
+        
+            this.vista.menuActualizacion.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+                abrirFrameActualizacion(e);
+               
+            }
+        });
 
     }
     
     
     public void abrirFramePresupuesto(MouseEvent e){
         
-                 vista.escritorio.removeAll();
+                vista.escritorio.removeAll();
                 vista.escritorio.repaint();
                 vista.escritorio.add(BorderLayout.CENTER, this.framePresupuesto);
                 vista.escritorio.getDesktopManager().maximizeFrame(framePresupuesto);
                 this.framePresupuesto.show();
+    }
+    
+      public void abrirFrameActualizacion(MouseEvent e){
+        
+                vista.escritorio.removeAll();
+                vista.escritorio.repaint();
+                vista.escritorio.add(BorderLayout.CENTER, this.frameVistaExcel);
+                vista.escritorio.getDesktopManager().maximizeFrame(frameVistaExcel);
+                this.frameVistaExcel.show();
     }
 
 }
