@@ -6,7 +6,9 @@
 package VISTA;
 
 import CONTROLADOR.ControladorExcel;
+import CONTROLADOR.ControladorVistaPrincipal;
 import MODELO.ModeloExcel;
+import MODELO.ModeloProductos;
 
 /**
  *
@@ -16,8 +18,13 @@ public class main {
     public static void main(String[] args) {
         
         vistaPrincipal vista = new vistaPrincipal();
+        VistaExcel vistaExcel = new VistaExcel();
         ModeloExcel modelo = new ModeloExcel();
+        ModeloProductos modeloProductos = new ModeloProductos();
+        ControladorExcel controlExcel = new ControladorExcel(vistaExcel,modelo);
+        ControladorVistaPrincipal controlVistaPrincipal = new  ControladorVistaPrincipal(vista,modeloProductos);
         vista.setVisible(true);
+        
         
         
         /*HASDLKHFBSDHKFFLDHFSHLFDSHFISDFISDF*/

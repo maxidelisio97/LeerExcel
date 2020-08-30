@@ -209,7 +209,6 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         lblSumatoria = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         campoPagaCon = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
 
         setBorder(null);
         setClosable(true);
@@ -254,14 +253,10 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
 
         jPanel1.setForeground(new java.awt.Color(204, 204, 204));
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos_Imagenes/import.png"))); // NOI18N
         jButton3.setText("Realizar Venta");
         jButton3.setBorder(null);
 
         btnCancelar.setForeground(new java.awt.Color(102, 255, 102));
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos_Imagenes/delete.png"))); // NOI18N
-
-        btnQuitarProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos_Imagenes/cruz.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Fira Code Light", 0, 14)); // NOI18N
         jLabel2.setText("Eliminar");
@@ -351,7 +346,7 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radioCodigoProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(campoBuscarProd, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,7 +397,6 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         );
 
         lblIMAGEN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIMAGEN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos_Imagenes/camera.png"))); // NOI18N
         lblIMAGEN.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 204), 1, true));
 
         jPanel5.setBackground(new java.awt.Color(57, 72, 85));
@@ -511,10 +505,6 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(0, 0, 1360, 740);
-
-        jPanel4.setLayout(new java.awt.BorderLayout());
-        getContentPane().add(jPanel4);
-        jPanel4.setBounds(10, 80, 290, 200);
 
         getAccessibleContext().setAccessibleDescription("");
 
@@ -626,7 +616,6 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     public javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;

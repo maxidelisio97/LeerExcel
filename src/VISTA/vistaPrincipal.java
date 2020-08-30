@@ -14,8 +14,8 @@ import java.awt.event.ActionEvent;
  */
 public class vistaPrincipal extends javax.swing.JFrame {
 
-    private  vistaPrincipal v = new vistaPrincipal();
-    private vistaPresupuesto p = new vistaPresupuesto();
+//    private  vistaPrincipal v = new vistaPrincipal();
+   // private vistaPresupuesto p = new vistaPresupuesto();
     /**
      * Creates new form vistaPrincipal
      */
@@ -35,9 +35,9 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         escritorio = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        barraMenu = new javax.swing.JMenuBar();
+        menuPresupuestos = new javax.swing.JMenu();
+        menuActualizacion = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,27 +47,22 @@ public class vistaPrincipal extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1014, Short.MAX_VALUE)
+            .addGap(0, 1367, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
+            .addGap(0, 719, Short.MAX_VALUE)
         );
 
         jPanel1.add(escritorio, java.awt.BorderLayout.CENTER);
 
-        jMenu1.setText("Presupuestos");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(jMenu1);
+        menuPresupuestos.setText("Presupuestos");
+        barraMenu.add(menuPresupuestos);
 
-        jMenu2.setText("Actualizacion");
-        jMenuBar1.add(jMenu2);
+        menuActualizacion.setText("Actualizacion");
+        barraMenu.add(menuActualizacion);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(barraMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,25 +80,13 @@ public class vistaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-       
-        v.removeAll();
-        v.repaint();
-        v.add(BorderLayout.CENTER, this.v);
-        v.escritorio.getDesktopManager().maximizeFrame(p);
-        this.p.show();
-        
-          
-    
-    }//GEN-LAST:event_jMenu1ActionPerformed
-
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JMenuBar barraMenu;
     public javax.swing.JDesktopPane escritorio;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    public javax.swing.JMenu menuActualizacion;
+    public javax.swing.JMenu menuPresupuestos;
     // End of variables declaration//GEN-END:variables
 }

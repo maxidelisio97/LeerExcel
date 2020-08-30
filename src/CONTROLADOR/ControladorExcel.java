@@ -32,6 +32,7 @@ public class ControladorExcel {
     File archivo;
     
     Conexion conn ;
+    TableModel modeloTabla;
  
      
     public ControladorExcel(VistaExcel vistaE, ModeloExcel modeloE){
@@ -39,6 +40,7 @@ public class ControladorExcel {
         this.vistaE=vistaE;
         this.modeloE=modeloE;
         conn = new Conexion();
+         modeloTabla = this.vistaE.tabla.getModel();
         
         
         this.vistaE.btnImportar.addActionListener(new ActionListener(){
@@ -49,6 +51,8 @@ public class ControladorExcel {
                 
             }            
         }); 
+                
+
         
         this.vistaE.btnActualizarPrecio.addActionListener(new ActionListener(){
             @Override
@@ -78,6 +82,8 @@ public class ControladorExcel {
     
 }
      
+     
+     
      public void ActualizarListaDePrecios(){
           try {
             int numFila = this.vistaE.tabla.getRowCount();
@@ -89,7 +95,7 @@ public class ControladorExcel {
             
            // PreparedStatement ps = conexion.prepareStatement("UPDATE productos SET PRECIO=? WHERE CODIGO_ARTICULO=?");
             PreparedStatement ps = conexion.prepareStatement("INSERT INTO productos (CODIGO_ARTICULO,PRECIO,CLASE,SECTOR,MARCA,DESCRIPCION,UNIDAD) VALUES (?,?,?,?,?,?,?)");
-            TableModel modeloTabla = this.vistaE.tabla.getModel();
+            
             for (int i = 0; i < numFila; i++) {
                
                 ps.setString(1, (String) modeloTabla.getValueAt(i, 0));
