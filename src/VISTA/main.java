@@ -27,11 +27,7 @@ public class main {
        
         vista.setVisible(true);
         
-        
-<<<<<<< HEAD
-        
-=======
->>>>>>> maxi
+
        
     }
     

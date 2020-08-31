@@ -10,7 +10,6 @@ import MODELO.Productos;
 import VISTA.VistaExcel;
 import VISTA.vistaPresupuesto;
 import VISTA.vistaPrincipal;
-import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +30,7 @@ public class ControladorVistaPrincipal {
     private vistaPresupuesto framePresupuesto;
     private vistaPrincipal vista;
     private ModeloProductos modelo;
-    private TextAutoCompleter ac;
+ 
      double sumatoria=0;
 
     public ControladorVistaPrincipal(vistaPrincipal vista, ModeloProductos modelo) {
@@ -75,8 +74,18 @@ public class ControladorVistaPrincipal {
                 }
             }
         });
+        
+            this.vista.menuActualizacion.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+                abrirFrameActualizacion(e);
+               
+            }
+        });
 
     }
+
 
     public void abrirFramePresupuesto(MouseEvent e) {
 
@@ -96,6 +105,15 @@ public class ControladorVistaPrincipal {
 
         }
 
+    }
+    
+      public void abrirFrameActualizacion(MouseEvent e){
+        
+                vista.escritorio.removeAll();
+                vista.escritorio.repaint();
+                vista.escritorio.add(BorderLayout.CENTER, this.frameVistaExcel);
+                vista.escritorio.getDesktopManager().maximizeFrame(frameVistaExcel);
+                this.frameVistaExcel.show();
     }
 
 }
