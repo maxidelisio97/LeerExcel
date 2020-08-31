@@ -6,14 +6,20 @@
 package CONTROLADOR;
 
 import MODELO.ModeloProductos;
+import MODELO.Productos;
 import VISTA.VistaExcel;
 import VISTA.vistaPresupuesto;
 import VISTA.vistaPrincipal;
+import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,6 +31,8 @@ public class ControladorVistaPrincipal {
     private vistaPresupuesto framePresupuesto;
     private vistaPrincipal vista;
     private ModeloProductos modelo;
+    private TextAutoCompleter ac;
+     double sumatoria=0;
 
     public ControladorVistaPrincipal(vistaPrincipal vista, ModeloProductos modelo) {
 
@@ -32,26 +40,62 @@ public class ControladorVistaPrincipal {
         this.modelo = modelo;
         frameVistaExcel = new VistaExcel();
         framePresupuesto = new vistaPresupuesto();
-
+        cargarComboBoxProductos();
         this.vista.menuPresupuestos.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
 
                 abrirFramePresupuesto(e);
-               
+
+            }
+        });
+
+        framePresupuesto.comboBuscarProductos.setEditable(true);
+        framePresupuesto.comboBuscarProductos.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent event) {
+                if (event.getKeyChar() == KeyEvent.VK_ESCAPE) {                   
+                    Productos p = (Productos) framePresupuesto.comboBuscarProductos.getSelectedItem();
+                   
+                    if (p != null) {
+
+                        String cantidad = JOptionPane.showInputDialog("Cantidad ?");
+                        double importe = Double.parseDouble(p.getPrecio()) * Integer.parseInt(cantidad);
+                        sumatoria+=importe;
+                        String importeTotal = String.valueOf(importe);                        
+                        Object ListaProductos[] = {cantidad, p.getCodigo(), importeTotal, p.getDecripcion(), p.getSector(), p.getMarca(), p.getClase()};                        
+                        framePresupuesto.modeloTablaProductosArriba.addRow(ListaProductos);                      
+                        framePresupuesto.lblSumatoria.setText(String.valueOf(sumatoria));
+                        
+                        
+                        
+                    }
+
+                }
             }
         });
 
     }
-    
-    
-    public void abrirFramePresupuesto(MouseEvent e){
-        
-                 vista.escritorio.removeAll();
-                vista.escritorio.repaint();
-                vista.escritorio.add(BorderLayout.CENTER, this.framePresupuesto);
-                vista.escritorio.getDesktopManager().maximizeFrame(framePresupuesto);
-                this.framePresupuesto.show();
+
+    public void abrirFramePresupuesto(MouseEvent e) {
+
+        vista.escritorio.removeAll();
+        vista.escritorio.repaint();
+        vista.escritorio.add(BorderLayout.CENTER, this.framePresupuesto);
+        vista.escritorio.getDesktopManager().maximizeFrame(framePresupuesto);
+        this.framePresupuesto.show();
+    }
+
+    private void cargarComboBoxProductos() {
+        ArrayList<Productos> listaProductos = new ArrayList<Productos>();
+        listaProductos = modelo.getProductosbd();
+
+        for (Productos c : listaProductos) {
+            framePresupuesto.modeloComboProductos.addElement(c);
+
+        }
+
     }
 
 }

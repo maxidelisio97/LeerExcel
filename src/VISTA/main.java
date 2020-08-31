@@ -6,6 +6,7 @@
 package VISTA;
 
 import CONTROLADOR.ControladorExcel;
+import CONTROLADOR.ControladorProductos;
 import CONTROLADOR.ControladorVistaPrincipal;
 import MODELO.ModeloExcel;
 import MODELO.ModeloProductos;
@@ -19,15 +20,15 @@ public class main {
         
         vistaPrincipal vista = new vistaPrincipal();
         VistaExcel vistaExcel = new VistaExcel();
-        ModeloExcel modelo = new ModeloExcel();
+        ModeloExcel modeloExcel = new ModeloExcel();
         ModeloProductos modeloProductos = new ModeloProductos();
-        ControladorExcel controlExcel = new ControladorExcel(vistaExcel,modelo);
+        ControladorExcel controlExcel = new ControladorExcel(vistaExcel,modeloExcel);
         ControladorVistaPrincipal controlVistaPrincipal = new  ControladorVistaPrincipal(vista,modeloProductos);
+       
         vista.setVisible(true);
         
         
-        
-        /*HASDLKHFBSDHKFFLDHFSHLFDSHFISDFISDF*/
+       
     }
     
 }
