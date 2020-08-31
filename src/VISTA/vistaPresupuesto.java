@@ -1,6 +1,7 @@
 package VISTA;
 
 import MODELO.ModeloExcel;
+import MODELO.Productos;
 
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -11,6 +12,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -21,10 +23,14 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class vistaPresupuesto extends javax.swing.JInternalFrame {
 
-    DefaultTableModel modeloTablaProductosArriba = new DefaultTableModel() {
+    public DefaultComboBoxModel modeloComboProductos;
+
+
+    public DefaultTableModel modeloTablaProductosArriba = new DefaultTableModel() {
 
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -49,19 +55,19 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
     String proveedor = "";
 
 //    DefaultListModel<Producto> modeloListaProductos = new DefaultListModel<Producto>();
-   // BaseDatos base = new BaseDatos();
+    // BaseDatos base = new BaseDatos();
     int filaSeleccionada;
     boolean Seleccion = false;
 
     public vistaPresupuesto() {
-
+        modeloComboProductos = new DefaultComboBoxModel();
         initComponents();
-
+        AutoCompleteDecorator.decorate(comboBuscarProductos);
         cargarColumnasTablaAbajo();
         cargarColumnasTablaArriba();
         cargarListenerModeloTabla();
 //        cargarModeloTablaArriba();
-        ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
 
         new lamina();
 
@@ -83,7 +89,7 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         });
     }
 
-   /* private void cargarModeloTablaArriba() {
+    /* private void cargarModeloTablaArriba() {
 
         ArrayList<Producto> listaProductoAbajo = base.obtenerProductos();
         int numeroProducto = listaProductoAbajo.size();
@@ -107,7 +113,6 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         }
 
     }*/
-
     private void cargarColumnasTablaAbajo() {
         modeloTablaProductosAbajo.addColumn("Codigo");
         modeloTablaProductosAbajo.addColumn("Nombre");
@@ -126,51 +131,57 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         //ColCodigo.setPreferredWidth(1);
         ColCodigo.setMaxWidth(80);
         ColCodigo.setMinWidth(10);
-        
+
         ColNombre.setMaxWidth(500);
         ColNombre.setMinWidth(500);
-      
-        
+
         ColProve.setMaxWidth(90);
         ColProve.setMinWidth(90);
-      
+
         ColVen.setMaxWidth(90);
         ColVen.setMinWidth(10);
-        
+
         Colimport.setMaxWidth(80);
         Colimport.setMinWidth(10);
-        
-        
+
     }
+
     private void cargarColumnasTablaArriba() {
+        modeloTablaProductosArriba.addColumn("Cant");
         modeloTablaProductosArriba.addColumn("Codigo");
-        modeloTablaProductosArriba.addColumn("Nombre");
-        modeloTablaProductosArriba.addColumn("ID Proveedor");
-        modeloTablaProductosArriba.addColumn("P.Venta");
-        modeloTablaProductosArriba.addColumn("Stock");
+        modeloTablaProductosArriba.addColumn("Precio");
+        modeloTablaProductosArriba.addColumn("Descripcion");
+        modeloTablaProductosArriba.addColumn("Sector");
+        modeloTablaProductosArriba.addColumn("Marca");
+        modeloTablaProductosArriba.addColumn("Clase");
         
-         TableColumn ColCodigo = tablaArriba.getColumn("Codigo");
-        TableColumn ColNombre = tablaArriba.getColumn("Nombre");
-        TableColumn ColProve = tablaArriba.getColumn("ID Proveedor");
+        
+        TableColumn ColCant = tablaArriba.getColumn("Cant");
+        TableColumn ColCodigo = tablaArriba.getColumn("Codigo");
+        TableColumn ColPrecio = tablaArriba.getColumn("Precio");
+        TableColumn ColClase = tablaArriba.getColumn("Clase");
+
+        TableColumn ColSector = tablaArriba.getColumn("Sector");
+        TableColumn ColMarco = tablaArriba.getColumn("Marca");
+        TableColumn ColDesc = tablaArriba.getColumn("Descripcion");
        
-        TableColumn ColVen = tablaArriba.getColumn("P.Venta");
-        TableColumn ColStock = tablaArriba.getColumn("Stock");
+        ColCant.setMinWidth(10);
+        ColCant.setMaxWidth(30);
 
         ColCodigo.setMaxWidth(80);
         ColCodigo.setMinWidth(10);
-        
-  
-        ColNombre.setMinWidth(100);
-        ColNombre.setMaxWidth(510);
-        
-        ColProve.setMaxWidth(100);
-        ColProve.setMinWidth(50);
-      
-        ColVen.setMaxWidth(80);
-        ColVen.setMinWidth(10);
-        
-        ColStock.setMaxWidth(80);
-        ColStock.setMinWidth(10);
+
+        ColPrecio.setMinWidth(100);
+        ColPrecio.setMaxWidth(510);
+
+        ColSector.setMaxWidth(100);
+        ColSector.setMinWidth(50);
+
+        ColMarco.setMaxWidth(80);
+        ColMarco.setMinWidth(10);
+
+        ColClase.setMaxWidth(80);
+        ColClase.setMinWidth(10);
 
     }
 
@@ -186,7 +197,7 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAbajo = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
+        btnRealizarVenta = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnQuitarProd = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -195,12 +206,12 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         radioCodigo = new javax.swing.JRadioButton();
         radioDescripcion = new javax.swing.JRadioButton();
         radioCodigoProveedor = new javax.swing.JRadioButton();
-        campoBuscarProd = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
         jRadioButton3 = new javax.swing.JRadioButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jTextField2 = new javax.swing.JTextField();
+        comboBuscarProductos = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -253,8 +264,8 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
 
         jPanel1.setForeground(new java.awt.Color(204, 204, 204));
 
-        jButton3.setText("Realizar Venta");
-        jButton3.setBorder(null);
+        btnRealizarVenta.setText("Realizar Venta");
+        btnRealizarVenta.setBorder(null);
 
         btnCancelar.setForeground(new java.awt.Color(102, 255, 102));
 
@@ -282,7 +293,7 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
                         .addGap(17, 17, 17)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRealizarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -291,7 +302,7 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRealizarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -315,8 +326,6 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         radioCodigoProveedor.setText("Codigo Proveedor");
         radioCodigoProveedor.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 255, 255), 1, true));
 
-        campoBuscarProd.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-
         jTextField1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jTextField1.setText("fac-numero");
 
@@ -333,42 +342,42 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         jTextField2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jTextField2.setText("Cliente");
 
+        comboBuscarProductos.setModel(modeloComboProductos);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(radioDescripcion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radioCodigo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(radioCodigoProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(campoBuscarProd, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(radioDescripcion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(radioCodigo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radioCodigoProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 331, Short.MAX_VALUE)
+                .addComponent(jRadioButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(comboBuscarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoBuscarProd, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBuscarProductos))
+                .addGap(20, 20, 20)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButton1)
@@ -512,9 +521,8 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 /**/
     public void LimpiarListaProductos() {
-    //    modeloListaProductos.clear();
+        //    modeloListaProductos.clear();
     }
-
 
 
     private void tablaArribaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaArribaKeyReleased
@@ -549,7 +557,7 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_tablaArribaKeyReleased
 
-  /*  public void desplegarFoto(Producto prod) {
+    /*  public void desplegarFoto(Producto prod) {
 
         ImageIcon ImagenProducto = null;
 
@@ -568,7 +576,6 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         }
 
     }*/
-
     private void LimpiarLista() {
         int numFilas = modeloTablaProductosArriba.getRowCount();
         if (numFilas > 0) {
@@ -604,11 +611,11 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnQuitarProd;
-    private javax.swing.JTextField campoBuscarProd;
+    public javax.swing.JButton btnRealizarVenta;
     private javax.swing.JTextField campoPagaCon;
+    public javax.swing.JComboBox<Productos> comboBuscarProductos;
     private javax.swing.ButtonGroup grupoBusquedaCriterio;
     private javax.swing.ButtonGroup grupo_boletas;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -627,11 +634,11 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblIMAGEN;
-    private javax.swing.JTextField lblSumatoria;
+    public javax.swing.JTextField lblSumatoria;
     private javax.swing.JRadioButton radioCodigo;
     private javax.swing.JRadioButton radioCodigoProveedor;
     private javax.swing.JRadioButton radioDescripcion;
     private javax.swing.JTable tablaAbajo;
-    private javax.swing.JTable tablaArriba;
+    public javax.swing.JTable tablaArriba;
     // End of variables declaration//GEN-END:variables
 }
